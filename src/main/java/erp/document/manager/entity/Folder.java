@@ -1,17 +1,35 @@
 package erp.document.manager.entity;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import java.util.List;
 
+@Entity
+@Table(name = "folders")
 public class Folder {
 
-    Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    String name;
+    @NotBlank
+    @Column(nullable = false)
+    private String name;
 
-    Long parentFolderId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_folder_id")
+    private Folder parentFolder;
 
-    List<Folder> folders;
+    @OneToMany(mappedBy = "parentFolder", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Folder> subFolders;
 
-    List<File> files;
+    @OneToMany(mappedBy = "folder", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<File> files;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner_id", nullable = false)
+    private User owner;
+
+    // Add getters and setters
+    // ... existing code ...
 }
