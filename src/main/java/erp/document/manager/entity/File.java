@@ -21,6 +21,10 @@ public class File {
     @Column(nullable = false)
     private Long fileSize;
 
+    @NotNull
+    @Column(nullable = false)
+    private String fileUrl;
+
     private String description;
 
     @NotBlank
@@ -91,6 +95,14 @@ public class File {
 
     public List<String> getTags() {
         return tags;
+    }
+
+    public String getFileUrl() {
+        return fileUrl;
+    }
+
+    public void setFileUrl(String fileUrl) {
+        this.fileUrl = fileUrl;
     }
 
     public void setTags(List<String> tags) {
